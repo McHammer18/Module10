@@ -17,6 +17,8 @@ class Student:
             raise ValueError
         if major not in self.MAJORS:
             raise ValueError
+        if not isinstance(gpa, float):
+            raise ValueError
         if not 0.0 <= gpa <= 4.0:
             raise ValueError
         self.last_name = lname
