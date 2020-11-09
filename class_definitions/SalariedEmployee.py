@@ -8,7 +8,7 @@ and salary jobs are their own object
 """
 from datetime import date
 
-from class_definitions.employee import Employee
+from class_definitions.employee2 import Employee
 
 
 class SalariedEmployee(Employee):

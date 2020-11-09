@@ -5,27 +5,47 @@ Module 10: unit testing classes
 
 10/31/20
 """
+from class_definitions.Person import Person
 
 
-class Student:
+class Student(Person):
     """Student class"""
-    MAJORS = ('Liberal Arts', 'Comp Science', 'Math', 'English', 'Criminal Justice', 'Cybersecurity')
-    def __init__(self, lname, fname, major, gpa=0.0):
-        name_characters = set("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'-")
-
-        if not (name_characters.issuperset(lname) and name_characters.issuperset(fname)):
-            raise ValueError
+    MAJORS = ('Liberal Arts', 'Comp Science', 'Math', 'Computer Engineering', 'English', 'Criminal Justice', 'Cybersecurity', 'Being Awesome!')
+    def __init__(self, s_id, lname, fname, major='Math', gpa=0.0):
         if major not in self.MAJORS:
-            raise ValueError
-        if not isinstance(gpa, float):
-            raise ValueError
-        if not 0.0 <= gpa <= 4.0:
-            raise ValueError
-        self.last_name = lname
-        self.first_name = fname
-        self.major = major
+            raise ValueError("not a valid major")
+        super().__init__(fname, lname)
+        self._s_id = s_id
+        self._major = major
+        self._gpa = gpa
+
+    @property
+    def gpa(self):
+        return self._gpa
+
+    @gpa.setter
+    def gpa(self, value):
+        if not isinstance(value, float):
+            raise ValueError("Not a valid gpa float value")
+        if not 0.0 <= value <= 4.0:
+            raise ValueError("Not a valid gpa range")
+        self._gpa = value
+
+    def display(self):
+        return Person.display(self) + " (" + str(self._s_id) + ") " + self._major + " gpa: " + str(self._gpa)
+
+    def change_major(self, major):
+        self._major = major
+
+    def change_gpa(self, gpa=0.0):
         self.gpa = gpa
 
 
-    def __str__(self):
-        return self.last_name + ", " + self.first_name + " has major " + self.major + " with gpa: " + str(self.gpa)
+#Driver
+my_student = Student(900111111, 'Song', 'River')
+print(my_student.display())
+my_student = Student(900111111, 'Song', 'River', 'Computer Engineering')
+print(my_student.display())
+my_student = Student(900111111, 'Song', 'River', 'Computer Engineering', 4.0)
+print(my_student.display())
+del my_student
